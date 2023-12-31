@@ -7,7 +7,6 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 async function generateDockerCompose(baseImages) {
-    // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const prompt = `you are writing a Docker Compose file adhering to industry standards. Define services based on the following images: ${baseImages.join(', ')}. Utilize default configurations and incorporate essential specifications such as volumes, ports, networks, health checks, and more for each image and service. Ensure strict adherence to the given images and services, and avoid including any additional services or images beyond the specified ones. dont write comments `;
 
@@ -36,7 +35,6 @@ cli.main(async function (args, options) {
 
     try {
         const dockerComposeContent = await generateDockerCompose(baseImages);
-        console.log(dockerComposeContent)
         fs.writeFileSync(filename, dockerComposeContent, 'utf-8');
         cli.ok(`Docker Compose file '${filename}' created successfully.`);
     } catch (error) {

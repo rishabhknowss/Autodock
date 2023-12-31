@@ -19,5 +19,5 @@ chmod +x autoDock.js
 
 ### try
 ```
-./autoDock.js -f "Dockerfile" -b "UBUNTU"
+./autoDock.js -b ubuntu,python,redis,node
 ```
