@@ -14,10 +14,10 @@ npm install
 
 ### Permissions
 ```
-chomd +x autoDock.js
+chmod +x autoDock.js
 ```
 
 ### try
 ```
-./autoDock.js -f "Dockerfile" -b "UBUTU"
+./autoDock.js -f "Dockerfile" -b "UBUNTU"
 ```
