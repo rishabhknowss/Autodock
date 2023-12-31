@@ -1,31 +1,45 @@
 #!/usr/bin/env node
-
 const fs = require('fs');
 const cli = require('cli');
+require('dotenv').config();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+
+async function generateDockerCompose(baseImages) {
+    // For text-only input, use the gemini-pro model
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const prompt = `you are writing a Docker Compose file adhering to industry standards. Define services based on the following images: ${baseImages.join(', ')}. Utilize default configurations and incorporate essential specifications such as volumes, ports, networks, health checks, and more for each image and service. Ensure strict adherence to the given images and services, and avoid including any additional services or images beyond the specified ones.`;
+
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text();
+}
 
 cli.parse({
-    filename: ['f', 'Name of the Dockerfile to create', 'string', 'Dockerfile'],
-    baseImage: ['b', 'Base image for the Dockerfile', 'string', 'node:14'],
-    appDirectory: ['d', 'Directory containing your app files', 'string', 'app'],
+    filename: ['f', 'Name of the Docker Compose file to create', 'string', 'docker-compose.yml'],
+    baseImage: ['b', 'Base images for services', 'string', []],
 });
 
-cli.main(function (args, options) {
+
+cli.main(async function (args, options) {
     const filename = options.filename;
-    const baseImage = options.baseImage;
-    const appDirectory = options.appDirectory;
-
-    const dockerfileContent = `
-FROM ${baseImage}
+    const baseImages = Array.isArray(options.baseImage) ? options.baseImage : [options.baseImage];
+    console.log(baseImages.join(', '))
 
 
-WORKDIR /${appDirectory}
+    if (baseImages.length === 0) {
+        cli.error('Please provide at least one base image using the -b option.');
+        cli.getUsage();
+        return;
+    }
 
-
-COPY . .
-
-
-CMD ["npm", "start"]`;
-
-    fs.writeFileSync(filename, dockerfileContent, 'utf-8');
-    console.log(`Dockerfile '${filename}' created successfully.`);
+    try {
+        const dockerComposeContent = await generateDockerCompose(baseImages);
+        fs.writeFileSync(filename, dockerComposeContent, 'utf-8');
+        cli.ok(`Docker Compose file '${filename}' created successfully.`);
+    } catch (error) {
+        cli.error('Error generating Docker Compose file:', error.message);
+    }
 });
