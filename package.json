@@ -7,9 +7,12 @@
   },
   "name": "autodock",
   "version": "1.0.0",
-  "main": "sort.js",
+  "main": "autodock.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "autodock": "./autodock.js"
   },
   "keywords": [],
   "author": "",

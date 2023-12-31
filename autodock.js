@@ -8,7 +8,7 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 async function generateDockerCompose(baseImages) {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const prompt = `you are writing a Docker Compose file adhering to industry standards. Define services based on the following images: ${baseImages.join(', ')}. Utilize default configurations and incorporate essential specifications such as volumes, ports, networks, health checks, and more for each image and service. Ensure strict adherence to the given images and services, and avoid including any additional services or images beyond the specified ones. dont write comments `;
+    const prompt = `you are writing a Docker Compose executable file adhering to industry standards and latest versions. Define services based on the following images: ${baseImages.join(', ')}. Utilize default configurations and incorporate essential specifications such as volumes, ports, networks, health checks, and more for each image and service. Ensure strict adherence to the given images and services, and avoid including any additional services or images beyond the specified ones. dont write comments `;
 
 
     const result = await model.generateContent(prompt);

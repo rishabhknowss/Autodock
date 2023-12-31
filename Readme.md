@@ -1,18 +1,19 @@
-# autoDock 
-## Ai powered Docker generator
+# AutoDock
 
-### Installation
+AutoDock is a command-line tool for generating Docker Compose files based on specified base images using Google Generative AI
+
+## Installation
 
 ```
 npm install 
 ```
 
-### Permissions
+## Permissions
 ```
-chmod +x autoDock.js
+chmod +x autodock.js
 ```
 
-### try
+## Usage
 ```
-./autoDock.js -b ubuntu,python,redis,node
+./autodock.js -b ubuntu,python,redis,node
 ```
