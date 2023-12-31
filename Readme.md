@@ -14,7 +14,7 @@ npm install
 
 ### Permissions
 ```
-chomd +x autoDock.js
+chmod +x autoDock.js
 ```
 
 ### try
