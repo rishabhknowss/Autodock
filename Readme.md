@@ -4,19 +4,20 @@
 
 
 
-### try
 
+
+### Installation
 
 ```
 npm install 
 ```
 
-for permissions
+### Permissions
 ```
 chomd +x autoDock.js
 ```
 
-
+### try
 ```
 ./autoDock.js -f "Dockerfile" -b "UBUTU"
 ```
