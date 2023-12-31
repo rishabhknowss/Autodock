@@ -5,15 +5,18 @@ AutoDock is a command-line tool for generating Docker Compose files based on spe
 ## Installation
 
 ```
-npm install 
+npm install autodock
 ```
-
-## Permissions
-```
-chmod +x autodock.js
-```
+## Setup
+Add your api in .env file
 
 ## Usage
+
 ```
-./autodock.js -b ubuntu,python,redis,node
+autodock -b "ubuntu,redis"
 ```
+ or
+```
+autodock -b "ubuntu,redis" -f "custom-compose.yml"
+```
+Personalise your images
