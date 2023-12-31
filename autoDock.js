@@ -14,16 +14,16 @@ cli.main(function (args, options) {
     const baseImage = options.baseImage;
     const appDirectory = options.appDirectory;
 
-    const dockerfileContent = `# Use the specified base image
+    const dockerfileContent = `
 FROM ${baseImage}
 
-# Set the working directory
+
 WORKDIR /${appDirectory}
 
-# Copy the app files to the container
+
 COPY . .
 
-# Specify the default command to run when the container starts
+
 CMD ["npm", "start"]`;
 
     fs.writeFileSync(filename, dockerfileContent, 'utf-8');
