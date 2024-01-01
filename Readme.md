@@ -10,9 +10,9 @@ npm install autodock
 
 ## Setup
 
-To use AutoDock, you need to set up your environment by creating a .env file with your [Gemini Pro](ht
-tps://ai.google.dev/) API key:
-```
+To use AutoDock, you need to set up your environment by creating a `.env` file with your [Gemini Pro](https://ai.google.dev/) API key:
+
+```dotenv
 API_KEY="YOUR_GEMINI_PRO_KEY"
 ```
 
