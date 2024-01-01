@@ -9,7 +9,8 @@ npm install autodock
 ```
 
 ## Setup
-Add your api in .env file
+
+.env file
 ```
 API_KEY="YOUR_GEMINI_PRO_KEY"
 ```
@@ -19,7 +20,7 @@ API_KEY="YOUR_GEMINI_PRO_KEY"
 ```
 autodock -f "Dockerfile" -b "node"
 ```
+Personalise your images
 ```
 autodock -f "docker-compose.yml" -b "ubuntu,"node","redis"
 ```
-Personalise your images
