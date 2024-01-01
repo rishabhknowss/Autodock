@@ -1,4 +1,4 @@
-# AutoDock
+![AutoDock Logo](logo.png)
 
 AutoDock is a command-line tool for generating Docker and Docker Compose files based on specified base images using Google Generative AI
 
@@ -32,6 +32,12 @@ docker build -t test-app .
 ```
 ```
 docker run -p 3000:3000 test-app
+```
+
+### Uninstall
+
+```
+npm unistall autodock
 ```
 
 
