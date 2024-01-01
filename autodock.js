@@ -8,8 +8,16 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
 async function generateDockerCompose(baseImages) {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const prompt = `you are writing a Docker Compose executable file adhering to industry standards and latest versions. Define services based on the following images: ${baseImages.join(', ')}. Utilize default configurations and incorporate essential specifications such as volumes, ports, networks, health checks, and more for each image and service. Ensure strict adherence to the given images and services, and avoid including any additional services or images beyond the specified ones. dont write comments `;
+    const prompt = `Generate a Docker Compose file for a custom application. The application comprises multiple components, each using ${baseImages.join(', ')} images. Define the necessary services, networks, and volumes to ensure the proper functioning of the application. Specify the appropriate configurations for inter-service communication, port exposure, and data persistence. Use the latest version of the Docker Compose file format and every service. Ensure strict adherence to the given images and services, and AVOID including any additional services or images beyond the specified ones. Don't write comments.`;
 
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text();
+}
+
+async function generateDockerfile(baseImage) {
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const prompt = `Generate a Dockerfile for a ${baseImage} application. Include necessary instructions, dependencies, and configurations to create a Docker image for the specified base image. Use best practices for creating efficient and secure Docker images. Don't write comments.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -17,15 +25,13 @@ async function generateDockerCompose(baseImages) {
 }
 
 cli.parse({
-    filename: ['f', 'Name of the Docker Compose file to create', 'string', 'docker-compose.yml'],
-    baseImage: ['b', 'Base images for services', 'string', []],
+    filename: ['f', 'Name of the file to create', 'string', 'docker-compose.yml'],
+    baseImage: ['b', 'Base images for services or Dockerfile', 'string', []],
 });
-
 
 cli.main(async function (args, options) {
     const filename = options.filename;
     const baseImages = Array.isArray(options.baseImage) ? options.baseImage : [options.baseImage];
-   
 
     if (baseImages.length === 0) {
         cli.error('Please provide at least one base image using the -b option.');
@@ -34,10 +40,26 @@ cli.main(async function (args, options) {
     }
 
     try {
-        const dockerComposeContent = await generateDockerCompose(baseImages);
-        fs.writeFileSync(filename, dockerComposeContent, 'utf-8');
-        cli.ok(`Docker Compose file '${filename}' created successfully.`);
+        if (filename.endsWith('.yaml') || filename.endsWith('.yml')) {
+            // Generate Docker Compose file
+            const dockerComposeContent = await generateDockerCompose(baseImages);
+            fs.writeFileSync(filename, dockerComposeContent, 'utf-8');
+            cli.ok(`Docker Compose file '${filename}' created successfully.`);
+        } else if (filename.toLowerCase().endsWith('dockerfile')) {
+            // Generate Dockerfile
+            if (baseImages.length === 1) {
+                const dockerfileContent = await generateDockerfile(baseImages[0]);
+                fs.writeFileSync(filename, dockerfileContent, 'utf-8');
+                cli.ok(`Dockerfile '${filename}' created successfully for ${baseImages[0]}.`);
+            } else {
+                cli.error('When specifying a Dockerfile, provide only one base image using the -b option.');
+                cli.getUsage();
+            }
+        } else {
+            cli.error('Unsupported file format. Use .yaml, .yml for Docker Compose or .dockerfile for Dockerfile.');
+            cli.getUsage();
+        }
     } catch (error) {
-        cli.error('Error generating Docker Compose file:', error.message);
+        cli.error('Error generating file:', error.message);
     }
 });
