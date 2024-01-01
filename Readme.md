@@ -1,4 +1,4 @@
-![AutoDock Logo](logo.png)
+# AutoDock
 
 AutoDock is a command-line tool for generating Docker and Docker Compose files based on specified base images using Google Generative AI
 
@@ -10,7 +10,8 @@ npm install autodock
 
 ## Setup
 
-.env file
+To use AutoDock, you need to set up your environment by creating a .env file with your [Gemini Pro](ht
+tps://ai.google.dev/) API key:
 ```
 API_KEY="YOUR_GEMINI_PRO_KEY"
 ```
@@ -20,7 +21,7 @@ API_KEY="YOUR_GEMINI_PRO_KEY"
 ```
 autodock -f "Dockerfile" -b "node"
 ```
-Personalise your images
+Personalize your Docker Compose file by specifying multiple base images:
 ```
 autodock -f "docker-compose.yml" -b "ubuntu,"node","redis"
 ```
