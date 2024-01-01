@@ -25,5 +25,14 @@ Personalise your images
 autodock -f "docker-compose.yml" -b "ubuntu,"node","redis"
 ```
 
+# Docker build
+
+```
+docker build -t autodock-app .
+```
+```
+docker run -p 3000:3000 autodock-app
+```
+
 
 
