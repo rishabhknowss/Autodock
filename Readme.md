@@ -23,7 +23,7 @@ autodock -f "Dockerfile" -b "node"
 ```
 Personalize your Docker Compose file by specifying multiple base images:
 ```
-autodock -f "docker-compose.yml" -b "ubuntu,"node","redis"
+autodock -f "docker-compose.yml" -b "ubuntu","node","redis"
 ```
 
 ## Docker build
