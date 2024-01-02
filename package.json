@@ -1,6 +1,6 @@
 {
   "name": "autodock",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "AutoDock is a CLI tool for generating Dockerfile and Docker Compose files using generative AI.",
   "main": "autodock.js",
   "scripts": {
