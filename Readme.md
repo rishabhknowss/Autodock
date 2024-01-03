@@ -1,4 +1,4 @@
-# THIS PROJECT IS NOT SUPPOSE WORK AS EXPECTED :(
+# THIS PROJECT IS NOT SUPPOSE TO WORK AS EXPECTED :(
 # AutoDock
 
 AutoDock is a command-line tool for generating Docker and Docker Compose files based on specified base images using Google Generative AI
