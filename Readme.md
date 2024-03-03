@@ -1,4 +1,3 @@
-# THIS PROJECT IS NOT SUPPOSE WORK AS EXPECTED :( Idk 
 # AutoDock
 
 AutoDock is a command-line tool for generating Docker and Docker Compose files based on specified base images using Google Generative AI
@@ -41,6 +40,8 @@ docker run -p 3000:3000 test-app
 ```
 npm unistall autodock
 ```
+
+# THIS PROJECT IS NOT SUPPOSE WORK AS EXPECTED :( Idk
 
 
 
